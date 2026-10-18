@@ -1,0 +1,102 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aditya & Siddhibala Wedding//HI
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:magarmati@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261203T170000
+DTEND;TZID=Asia/Kolkata:20261203T200000
+SUMMARY:मागरमाटी\, मण्डपाच्छादन और मातृका पूजन
+DESCRIPTION:परंपरागत तिथि: अगहन कृष्ण दशमी\; स्थान: किशोर कुटी\, मानस भवन
+LOCATION:किशोर कुटी\, मानस भवन\, नगर निगम रोड\, राइट टाउन\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:khermai@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261204T090000
+DTEND;TZID=Asia/Kolkata:20261204T110000
+SUMMARY:खेरमाई देवी दर्शन-पूजन
+DESCRIPTION:परंपरागत तिथि: अगहन कृष्ण एकादशी\; स्थान: किशोर कुटी\, मानस भवन
+LOCATION:किशोर कुटी\, मानस भवन\, नगर निगम रोड\, राइट टाउन\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:shreefal-sat-haldi@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261204T120000
+DTEND;TZID=Asia/Kolkata:20261204T140000
+SUMMARY:श्रीफल सत एवं हरिद्रालेपन
+DESCRIPTION:इस कार्यक्रम के साथ भोजन भी जुड़ा है।\; स्थान: किशोर कुटी\, मानस भवन
+LOCATION:किशोर कुटी\, मानस भवन\, नगर निगम रोड\, राइट टाउन\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:mehendi@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261204T170000
+DTEND;TZID=Asia/Kolkata:20261204T200000
+SUMMARY:वधू की मेहंदी
+DESCRIPTION:परंपरागत तिथि: अगहन कृष्ण एकादशी\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:kul-devta@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261205T120000
+DTEND;TZID=Asia/Kolkata:20261205T130000
+SUMMARY:श्री कुल-देव (बरम-देव) पूजन
+DESCRIPTION:परंपरागत तिथि: अगहन कृष्ण द्वादशी\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:floral-haldi@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261205T130000
+DTEND;TZID=Asia/Kolkata:20261205T143000
+SUMMARY:वर-वधू पर पुष्प आशीर्वाद वर्षा (फूलों की हल्दी)
+DESCRIPTION:आशीर्वाद और पुष्प अनुष्ठान\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:lagun@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261205T160000
+DTEND;TZID=Asia/Kolkata:20261205T173000
+SUMMARY:लगुन संस्कार
+DESCRIPTION:यहाँ लगुन और तिलक एक ही संस्कार हैं।\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:engagement-sangeet@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261205T193000
+SUMMARY:सगाई और संगीत समारोह
+DESCRIPTION:संध्या कार्यक्रम ७:३० अपराह्न से आरंभ है।\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:baraat-welcome@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261206T090000
+DTEND;TZID=Asia/Kolkata:20261206T150000
+SUMMARY:बारात स्वागत\, वरमाला\, पाणिग्रहण\, सप्तपदी संस्कार
+DESCRIPTION:परंपरागत तिथि: अगहन कृष्ण त्रयोदशी / प्रदोष व्रत\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+BEGIN:VEVENT
+UID:reception-dinner@adisiddhi_4h
+DTSTAMP:20261018T195314Z
+DTSTART;TZID=Asia/Kolkata:20261206T200000
+SUMMARY:वर-वधू आशीर्वाद समारोह एवं प्रीतिभोज
+DESCRIPTION:रात्रि ८ बजे से\; स्थान: होटल गुलजार
+LOCATION:होटल गुलजार\, मदन महल चौक से शंकराचार्य चौक मार्ग\, महानद्दा\, जबलपुर\, मध्य प्रदेश\, भारत।
+END:VEVENT
+END:VCALENDAR

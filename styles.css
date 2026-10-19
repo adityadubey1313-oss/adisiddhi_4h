@@ -178,34 +178,6 @@ button {
   gap: 0.8rem;
 }
 
-.lang-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border: 1px solid rgba(91,28,32,0.18);
-  background: rgba(255,255,255,0.38);
-  border-radius: 999px;
-  padding: 0.25rem;
-}
-
-.lang-btn {
-  border: 0;
-  background: transparent;
-  padding: 0.55rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  letter-spacing: 0.12rem;
-  text-transform: uppercase;
-  color: rgba(42,25,21,0.72);
-  cursor: pointer;
-}
-
-.lang-btn.active {
-  background: var(--maroon);
-  color: var(--pearl);
-  box-shadow: 0 10px 18px rgba(91,28,32,0.15);
-}
-
 .hero {
   position: relative;
   padding: 3.5rem 0 2rem;
@@ -468,23 +440,6 @@ body {
   color: #51423b;
   font-size: 0.72rem;
   letter-spacing: 0.08rem;
-}
-
-.lang-toggle {
-  border-color: rgba(100, 44, 50, 0.2);
-  border-radius: 4px;
-  background: #fffdf9;
-}
-
-.lang-btn {
-  border-radius: 2px;
-  color: var(--ink);
-  letter-spacing: 0.04rem;
-}
-
-.lang-btn.active {
-  background: var(--maroon);
-  box-shadow: none;
 }
 
 .hero {
@@ -1230,10 +1185,6 @@ a:hover {
     font-size: 1.25rem;
   }
 
-  .lang-btn {
-    padding: 0.45rem 0.62rem;
-  }
-
   .main-nav {
     gap: 0.6rem;
   }
@@ -1423,10 +1374,6 @@ a:hover {
 
 .main-nav a {
   font-size: calc(0.72rem + 1px);
-}
-
-.lang-btn {
-  font-size: calc(0.75rem + 1px);
 }
 
 .intro-tag,

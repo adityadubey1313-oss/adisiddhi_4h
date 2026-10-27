@@ -18,24 +18,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20261028-hindi-source" />
+    <link rel="stylesheet" href="styles.css?v=20261028-hindi-elegance" />
   </head>
   <body>
+    <audio id="backgroundMusic" src="wedding-song.mp3" loop preload="none"></audio>
+    <button class="music-toggle" id="musicToggle" type="button" aria-label="संगीत बंद करें" aria-pressed="true" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path class="music-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"></path><path class="music-silent" d="m16 9 5 6m0-6-5 6"></path></svg>
+    </button>
+    <p class="sr-only" id="musicStatus" role="status" aria-live="polite"></p>
     <div class="page-shell">
-      <header class="site-header">
-        <div class="nav-wrap">
-          <div class="brand" aria-label="सिद्धिबाला एवं आदित्य">सिद्धिबाला एवं आदित्य</div>
-
-          <nav class="main-nav" aria-label="Main navigation">
-            <a href="#home" data-copy="navHome">Home</a>
-            <a href="#schedule" data-copy="navSchedule">Schedule</a>
-            <a href="#venues" data-copy="navVenue">Venues</a>
-            <a href="#family" data-copy="navFamily">Family</a>
-          </nav>
-
-        </div>
-      </header>
-
       <main id="home">
         <section class="hero" aria-labelledby="introName">
           <div class="hero-shell">
@@ -114,12 +105,7 @@
         <section class="section" id="share">
           <h2 class="section-heading" id="shareTitle">Share the Invitation</h2>
           <div class="share-wrap">
-            <p id="downloadCalendarCaption">Download the complete invitation calendar and share the celebration with your loved ones.</p>
             <div class="action-group" aria-label="Invitation actions">
-              <button class="action-button action-button-icon" id="downloadCalendar" type="button" aria-label="Download calendar">
-                <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"></path></svg>
-                <span class="sr-only" id="downloadCalendarLabel">Download calendar</span>
-              </button>
               <button class="action-button action-button-icon" id="whatsappShare" type="button" aria-label="Share on WhatsApp">
                 <img class="whatsapp-logo" src="whatsapp-logo.png" alt="" aria-hidden="true" />
               </button>
@@ -148,7 +134,7 @@
       </footer>
     </div>
 
-    <script src="invitation-data.js?v=20261028-hindi-source"></script>
-    <script src="app.js?v=20261028-hindi-source"></script>
+    <script src="invitation-data.js?v=20261028-hindi-elegance"></script>
+    <script src="app.js?v=20261028-hindi-elegance"></script>
   </body>
 </html>

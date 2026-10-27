@@ -39,18 +39,11 @@ html[lang="hi"] body {
   font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
   line-height: 1.8;
 }
-
-html[lang="hi"] .brand,
 html[lang="hi"] .hero-title,
 html[lang="hi"] .section-heading {
   font-family: 'Noto Serif Devanagari', 'Mangal', serif;
   letter-spacing: 0;
   line-height: 1.45;
-}
-
-html[lang="hi"] .main-nav a {
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 img {
@@ -110,72 +103,6 @@ button {
 .page-shell::after {
   right: -5rem;
   bottom: 8rem;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  backdrop-filter: blur(16px);
-  background: rgba(247, 238, 230, 0.68);
-  border-bottom: 1px solid rgba(77, 41, 35, 0.08);
-}
-
-.nav-wrap {
-  width: min(1180px, calc(100% - 1.5rem));
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 72px;
-  gap: 1rem;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.5rem, 2vw, 2.1rem);
-  letter-spacing: 0.04em;
-  color: var(--maroon);
-}
-
-.brand-mark {
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg, rgba(215,167,110,0.18), rgba(91,28,32,0.15));
-  border: 1px solid rgba(91,28,32,0.14);
-  color: var(--gold);
-}
-
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-}
-
-.main-nav a {
-  font-size: 0.78rem;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
-  color: rgba(42,25,21,0.75);
-  transition: color 0.2s ease;
-}
-
-.main-nav a:hover,
-.main-nav a:focus-visible {
-  color: var(--maroon);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
 }
 
 .hero {
@@ -412,34 +339,6 @@ body {
 .page-shell::before,
 .page-shell::after {
   content: none;
-}
-
-.site-header {
-  background: rgba(250, 246, 239, 0.96);
-  border-bottom-color: var(--line);
-  backdrop-filter: blur(12px);
-}
-
-.nav-wrap {
-  min-height: 68px;
-  width: min(1180px, calc(100% - 3rem));
-}
-
-.brand {
-  color: var(--maroon);
-  font-size: 1.65rem;
-  letter-spacing: 0;
-  white-space: nowrap;
-}
-
-.main-nav {
-  gap: 1.1rem;
-}
-
-.main-nav a {
-  color: #51423b;
-  font-size: 0.72rem;
-  letter-spacing: 0.08rem;
 }
 
 .hero {
@@ -1002,34 +901,6 @@ a:hover {
 }
 
 @media (max-width: 760px) {
-  .nav-wrap {
-    width: calc(100% - 1.5rem);
-    min-height: 0;
-    flex-wrap: wrap;
-    padding: 0.55rem 0 0.35rem;
-  }
-
-  .brand {
-    font-size: 1.4rem;
-  }
-
-  .header-actions {
-    margin-left: auto;
-  }
-
-  .main-nav {
-    display: flex;
-    order: 3;
-    flex-basis: 100%;
-    justify-content: center;
-    gap: 0.9rem;
-    padding: 0.35rem 0 0.15rem;
-  }
-
-  .main-nav a {
-    font-size: 0.61rem;
-    letter-spacing: 0.035rem;
-  }
 
   .hero,
   .hero-shell {
@@ -1177,20 +1048,6 @@ a:hover {
   .share-wrap {
     align-items: flex-start;
     flex-direction: column;
-  }
-}
-
-@media (max-width: 360px) {
-  .brand {
-    font-size: 1.25rem;
-  }
-
-  .main-nav {
-    gap: 0.6rem;
-  }
-
-  .main-nav a {
-    font-size: 0.56rem;
   }
 }
 
@@ -1368,14 +1225,6 @@ a:hover {
   text-underline-offset: 3px;
 }
 
-.brand {
-  font-size: calc(1.65rem + 1px);
-}
-
-.main-nav a {
-  font-size: calc(0.72rem + 1px);
-}
-
 .intro-tag,
 .eyebrow {
   font-size: calc(0.7rem + 1px);
@@ -1462,13 +1311,6 @@ a:hover {
 }
 
 @media (max-width: 760px) {
-  .brand {
-    font-size: calc(1.4rem + 1px);
-  }
-
-  .main-nav a {
-    font-size: calc(0.61rem + 1px);
-  }
 
   .hero-date {
     font-size: calc(0.78rem + 1px);
@@ -1476,16 +1318,6 @@ a:hover {
 
   .wedding-detail strong {
     font-size: calc(0.78rem + 1px);
-  }
-}
-
-@media (max-width: 360px) {
-  .brand {
-    font-size: calc(1.25rem + 1px);
-  }
-
-  .main-nav a {
-    font-size: calc(0.56rem + 1px);
   }
 }
 
@@ -1502,7 +1334,6 @@ a:hover {
     gap: 0.45rem;
   }
 }
-
 
 /* Preserve the document's spelling, spacing and line breaks. */
 .source-paragraph {
@@ -1555,9 +1386,93 @@ html[lang="hi"] .hero-title {
   white-space: normal;
 }
 
-@media (max-width: 760px) {
-  html[lang="hi"] .brand {
-    font-size: 1.15rem;
-    white-space: normal;
+.hero {
+  padding: 0;
+}
+
+.hero .hero-artwork {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.hero-artwork .content {
+  width: 100%;
+  padding: 4rem 1.5rem 2.5rem;
+}
+
+html[lang="hi"] .hero-subtitle,
+html[lang="hi"] .hero-date,
+html[lang="hi"] .intro-tag {
+  letter-spacing: 0;
+}
+
+.source-invitation > p {
+  margin: 0.45rem 0;
+}
+
+.source-invitation > h3 {
+  margin: 1.6rem 0 0.6rem;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+.section > .section-heading::after,
+.section-heading-group > .section-heading::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 1px;
+  margin: 0.8rem 0 0;
+  background: var(--gold);
+}
+
+.schedule-day,
+.venue-card {
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 24px rgba(74, 38, 28, 0.04);
+}
+
+.invitation-details,
+#schedule,
+#venues,
+#family,
+#share {
+  scroll-margin-top: 1rem;
+}
+
+.music-toggle {
+  position: fixed;
+  top: max(0.5rem, env(safe-area-inset-top));
+  right: max(0.5rem, env(safe-area-inset-right));
+  z-index: 40;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: var(--pearl);
+  color: var(--maroon);
+  cursor: pointer;
+}
+
+.music-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.music-toggle[hidden],
+.music-toggle[aria-pressed="false"] .music-waves,
+.music-toggle[aria-pressed="true"] .music-silent {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

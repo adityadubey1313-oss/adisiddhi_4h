@@ -76,12 +76,6 @@ function setLanguage(lang) {
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', invitationData.siteUrl);
   document.querySelector('meta[property="og:image"]')?.setAttribute('content', `${invitationData.siteUrl}${invitationData.primaryHero}`);
   document.querySelector('meta[name="twitter:image"]')?.setAttribute('content', `${invitationData.siteUrl}${invitationData.primaryHero}`);
-  const brand = document.querySelector('.brand');
-  if (brand) {
-    brand.textContent = getText(couple, lang);
-    brand.setAttribute('aria-label', getText(couple, lang));
-  }
-  document.querySelector('.main-nav')?.setAttribute('aria-label', lang === 'hi' ? 'मुख्य नेविगेशन' : 'Main navigation');
   document.querySelectorAll('[aria-label="Invitation actions"], [aria-label="Wedding details"], [aria-label="Wedding invitation"]').forEach((element) => {
     element.setAttribute('aria-label', lang === 'hi' ? 'विवाह का निमंत्रण' : element.getAttribute('aria-label'));
   });
@@ -101,8 +95,6 @@ function setLanguage(lang) {
     familyTitle: t.familyHeading,
     familyLine: getText(familyLine, lang),
     shareTitle: t.shareHeading,
-    downloadCalendarCaption: t.calendarDescription,
-    downloadCalendarLabel: t.downloadCalendar,
     callActionLabel: t.call,
     contactDialogTitle: t.contactSheetTitle,
     contactDialogDescription: t.contactSheetAria,
@@ -116,8 +108,6 @@ function setLanguage(lang) {
     element.textContent = localizeDigits(t[element.dataset.copy], lang);
   });
 
-  const calendarButton = document.getElementById('downloadCalendar');
-  if (calendarButton) calendarButton.setAttribute('aria-label', localizeDigits(t.downloadCalendar, lang));
   const whatsappButton = document.getElementById('whatsappShare');
   if (whatsappButton) {
     whatsappButton.setAttribute('aria-label', localizeDigits(t.shareWhatsApp, lang));
@@ -334,83 +324,88 @@ function updateCountdown() {
   setText('secondsLabel', translations[appState.lang].countDownSeconds);
 }
 
-function createIcsContent() {
-  const lines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Aditya & Siddhibala Wedding//EN',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VTIMEZONE',
-    'TZID:Asia/Kolkata',
-    'BEGIN:STANDARD',
-    'TZOFFSETFROM:+0530',
-    'TZOFFSETTO:+0530',
-    'TZNAME:IST',
-    'END:STANDARD',
-    'END:VTIMEZONE'
-  ];
+function initMusic() {
+  const audio = document.getElementById('backgroundMusic');
+  const toggle = document.getElementById('musicToggle');
+  const status = document.getElementById('musicStatus');
+  let playbackPending = false;
 
-  events.forEach((event) => {
-    const startDate = event.date.replace(/-/g, '') + 'T' + event.start.replace(':', '') + '00';
-    const venue = venues[event.venueId];
-    const eventTitle = getText(event.title);
-    const note = event.timeText;
-    const venueName = venue.name.hi;
-    const description = [note, `${appState.lang === 'hi' ? 'स्थान' : 'Venue'}: ${venueName}`].filter(Boolean).join('; ');
+  function updateMusicControl() {
+    const enabled = !audio.muted;
+    toggle.setAttribute('aria-label', enabled ? 'संगीत बंद करें' : 'संगीत चालू करें');
+    toggle.setAttribute('aria-pressed', String(enabled));
+    toggle.title = enabled ? 'संगीत बंद करें' : 'संगीत चालू करें';
+  }
 
-    lines.push('BEGIN:VEVENT');
-    lines.push(`UID:${event.id}@adisiddhi`);
-    lines.push(`DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')}`);
-    lines.push(`DTSTART;TZID=Asia/Kolkata:${startDate}`);
-    if (event.end) {
-      const endDate = event.date.replace(/-/g, '') + 'T' + event.end.replace(':', '') + '00';
-      lines.push(`DTEND;TZID=Asia/Kolkata:${endDate}`);
+  async function startMusic() {
+    if (audio.muted || playbackPending || !audio.paused) return;
+    playbackPending = true;
+    try {
+      await audio.play();
+      status.textContent = '';
+    } catch (error) {
+      if (error.name === 'NotAllowedError') {
+        status.textContent = 'संगीत शुरू करने के लिए स्क्रीन पर टैप करें या कीबोर्ड का उपयोग करें।';
+        addInteractionListeners();
+      } else {
+        console.warn('संगीत शुरू नहीं हो सका।', error);
+        status.textContent = 'संगीत अभी उपलब्ध नहीं है।';
+      }
+    } finally {
+      playbackPending = false;
+      updateMusicControl();
     }
-    lines.push(`SUMMARY:${eventTitle.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')}`);
-    lines.push(`DESCRIPTION:${description.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')}`);
-    lines.push(`LOCATION:${`${venueName}, ${venue.address.hi}`.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')}`);
-    lines.push('END:VEVENT');
+  }
+
+  audio.loop = true;
+  toggle.hidden = false;
+  audio.addEventListener('playing', removeInteractionListeners, { once: true });
+  audio.addEventListener('play', updateMusicControl);
+  audio.addEventListener('pause', updateMusicControl);
+  audio.addEventListener('volumechange', updateMusicControl);
+  audio.addEventListener('error', () => {
+    console.warn('निमंत्रण का संगीत लोड नहीं हो सका।', audio.error);
+    status.textContent = 'संगीत उपलब्ध नहीं है।';
+    updateMusicControl();
+  });
+  toggle.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    if (!audio.muted) {
+      if (audio.error) audio.load();
+      startMusic();
+    }
+    updateMusicControl();
   });
 
-  lines.push('END:VCALENDAR');
-  return lines.map((line) => {
-    let folded = '';
-    let bytes = 0;
-    for (const character of line) {
-      const size = new TextEncoder().encode(character).length;
-      if (bytes + size > 75) {
-        folded += '\r\n ';
-        bytes = 1;
-      }
-      folded += character;
-      bytes += size;
-    }
-    return folded;
-  }).join('\r\n');
-}
+  function onInteraction(event) {
+    if (toggle.contains(event.target)) return;
+    if (event.type === 'keydown' && (event.repeat || !['Enter', ' ', 'ArrowDown', 'PageDown'].includes(event.key))) return;
+    startMusic();
+  }
+  function removeInteractionListeners() {
+    document.removeEventListener('pointerup', onInteraction, true);
+    document.removeEventListener('click', onInteraction, true);
+    document.removeEventListener('keydown', onInteraction, true);
+  }
+  function addInteractionListeners() {
+    document.addEventListener('pointerup', onInteraction, { capture: true, passive: true });
+    document.addEventListener('click', onInteraction, { capture: true, passive: true });
+    document.addEventListener('keydown', onInteraction, { capture: true, passive: true });
+  }
+  addInteractionListeners();
+  window.addEventListener('pagehide', () => audio.pause());
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) startMusic();
+  });
 
-function downloadCalendar() {
-  const blob = new Blob([createIcsContent()], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'aditya-siddhibala-wedding-invitation.ics';
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  updateMusicControl();
+  startMusic();
 }
 
 function init() {
-  const calendarButton = document.getElementById('downloadCalendar');
   const contactDialog = document.getElementById('contactDialog');
   const openContactsButton = document.getElementById('openContacts');
   const closeContactsButton = document.getElementById('closeContacts');
-
-  if (calendarButton) {
-    calendarButton.addEventListener('click', downloadCalendar);
-  }
 
   if (contactDialog && openContactsButton && closeContactsButton) {
     openContactsButton.addEventListener('click', () => contactDialog.showModal());
@@ -427,6 +422,7 @@ function init() {
   }
 
   setLanguage(appState.lang);
+  initMusic();
   setInterval(updateCountdown, 1000);
 }
 

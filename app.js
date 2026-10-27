@@ -2,7 +2,7 @@ const appState = {
   lang: 'hi'
 };
 
-const { translations, events, venues, family, couple, familyLine } = invitationData;
+const { translations, events, venues, couple, familyLine } = invitationData;
 const weddingEvent = events.find((event) => event.id === 'baraat-welcome');
 const receptionEvent = events.find((event) => event.id === 'reception-dinner');
 
@@ -51,6 +51,7 @@ function formatEventTime(time) {
 }
 
 function formatEventRange(event) {
+  if (appState.lang === 'hi') return event.timeText;
   const start = formatEventTime(event.start);
   if (event.end) return `${start}–${formatEventTime(event.end)}`;
   return appState.lang === 'hi' ? `${start} से आगे` : `${start} onwards`;
@@ -125,7 +126,7 @@ function setLanguage(lang) {
   const countdown = document.getElementById('countdown');
   if (countdown) countdown.setAttribute('aria-label', localizeDigits(t.countdownAria, lang));
   renderWeddingDetails(lang);
-  renderFamilies(lang);
+  renderSourceInvitation();
   renderSchedule(lang);
   renderVenues(lang);
   renderContacts(lang);
@@ -133,33 +134,33 @@ function setLanguage(lang) {
   updateCountdown();
 }
 
-function renderFamilies(lang) {
-  const familyContent = document.getElementById('familyGrid');
-  if (!familyContent) return;
+function appendSourceLines(container, lines) {
+  lines.forEach((text) => {
+    const element = document.createElement(/^(सौभाग्य-कांक्षिणी|चिरंजीव)/.test(text) ? 'h3' : 'p');
+    element.className = 'source-paragraph';
+    element.textContent = text;
+    container.appendChild(element);
+  });
+}
 
-  familyContent.innerHTML = '';
-  const groom = family[lang].groom;
-  const bride = family[lang].bride;
-
-  [groom, bride].forEach((section, index) => {
+function renderSourceInvitation() {
+  const source = invitationData.sourceDocument;
+  const story = document.getElementById('sourceInvitation');
+  story.replaceChildren();
+  appendSourceLines(story, [...source.invocation, ...source.invitation]);
+  const greetings = document.getElementById('sourceGreetings') || document.getElementById('familyGrid');
+  greetings.replaceChildren();
+  source.greetings.forEach((lines) => {
     const block = document.createElement('article');
     block.className = 'family-group';
-    const label = document.createElement('p');
-    label.className = 'family-role';
-    label.textContent = section.label;
-    const divider = document.createElement('span');
-    divider.className = 'family-divider';
-    divider.setAttribute('aria-hidden', 'true');
+    const heading = document.createElement('h3');
+    heading.className = 'family-role source-paragraph';
+    heading.textContent = lines[0];
     const names = document.createElement('div');
     names.className = 'family-names';
-    section.parents.forEach((person) => {
-      const name = document.createElement('p');
-      name.textContent = person;
-      names.appendChild(name);
-    });
-    block.dataset.family = index === 0 ? 'groom' : 'bride';
-    block.append(label, divider, names);
-    familyContent.appendChild(block);
+    appendSourceLines(names, lines.slice(1));
+    block.append(heading, names);
+    greetings.appendChild(block);
   });
 }
 
@@ -186,56 +187,54 @@ function renderWeddingDetails(lang) {
 
 function renderSchedule(lang) {
   const schedule = document.getElementById('scheduleList');
-  if (!schedule) return;
-
-  schedule.innerHTML = '';
-
+  schedule.replaceChildren();
   const groupedEvents = events.reduce((groups, event) => {
     const dayEvents = groups.get(event.date) || [];
     dayEvents.push(event);
     groups.set(event.date, dayEvents);
     return groups;
   }, new Map());
-
-  Array.from(groupedEvents.entries()).forEach(([dateString, dayEvents], index) => {
+  let program = '';
+  Array.from(groupedEvents.values()).forEach((dayEvents, index) => {
+    const first = dayEvents[0];
+    if (program !== first.programTitle) {
+      program = first.programTitle;
+      if (first.programPrelude) appendSourceLines(schedule, [first.programPrelude]);
+      const heading = document.createElement('h3');
+      heading.className = 'section-heading source-paragraph program-heading';
+      heading.textContent = program;
+      schedule.appendChild(heading);
+    }
     const daySection = document.createElement('section');
     daySection.className = 'schedule-day';
     daySection.style.setProperty('--day-index', index);
-
     const dayHeading = document.createElement('h3');
-    dayHeading.className = 'schedule-day-heading';
-    dayHeading.textContent = `${getText(dayEvents[0].day, lang)}, ${localizeDigits(formatDisplayDate(dateString, lang), lang)}`;
+    dayHeading.className = 'schedule-day-heading source-paragraph';
+    dayHeading.textContent = first.day.hi;
     daySection.appendChild(dayHeading);
-
     const timeline = document.createElement('ol');
     timeline.className = 'event-timeline';
     dayEvents.forEach((event) => {
       const venue = venues[event.venueId];
       const item = document.createElement('li');
       item.className = 'event-item';
-
       const time = document.createElement('p');
-      time.className = 'event-time';
-      time.textContent = formatEventRange(event);
-
+      time.className = 'event-time source-paragraph';
+      time.textContent = event.timeText;
       const title = document.createElement('h4');
-      title.textContent = getText(event.title, lang);
-
+      title.className = 'source-paragraph';
+      title.textContent = event.title.hi;
       const venueLink = document.createElement('a');
       venueLink.className = 'event-venue';
       venueLink.href = venue.mapsUrl;
       venueLink.target = '_blank';
       venueLink.rel = 'noopener noreferrer';
-      venueLink.innerHTML = `${directionsIcon()}<span>${getText(venue.name, lang)}</span>`;
-      venueLink.setAttribute('aria-label', localizeDigits(`${translations[lang].directionsTo} ${getText(venue.name, lang)}`, lang));
-
+      venueLink.innerHTML = directionsIcon();
+      const name = document.createElement('span');
+      name.textContent = venue.name.hi;
+      venueLink.appendChild(name);
+      venueLink.setAttribute('aria-label', translations[lang].directionsTo + ' ' + venue.name.hi);
       item.append(time, title, venueLink);
-      if (event.guestNote) {
-        const note = document.createElement('p');
-        note.className = 'event-note';
-        note.textContent = getText(event.guestNote, lang);
-        item.appendChild(note);
-      }
       timeline.appendChild(item);
     });
     daySection.appendChild(timeline);
@@ -245,20 +244,29 @@ function renderSchedule(lang) {
 
 function renderVenues(lang) {
   const venueGrid = document.getElementById('venueGrid');
-  if (!venueGrid) return;
-
-  venueGrid.innerHTML = '';
-
+  venueGrid.replaceChildren();
   Object.values(venues).forEach((venue) => {
     const card = document.createElement('article');
     card.className = 'venue-card';
-    card.innerHTML = `
-      <h3>${getText(venue.name, lang)}</h3>
-      <p>${getText(venue.address, lang)}</p>
-      <div class="venue-links">
-        <a class="button-link directions-link" href="${venue.mapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="${translations[lang].directionsTo} ${getText(venue.name, lang)}">${directionsIcon()}<span>${translations[lang].viewDirections}</span></a>
-      </div>
-    `;
+    const heading = document.createElement('h3');
+    heading.className = 'source-paragraph';
+    heading.textContent = venue.sourceLines[0];
+    card.appendChild(heading);
+    appendSourceLines(card, venue.sourceLines.slice(1));
+    const links = document.createElement('div');
+    links.className = 'venue-links';
+    const link = document.createElement('a');
+    link.className = 'button-link directions-link';
+    link.href = venue.mapsUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', translations[lang].directionsTo + ' ' + venue.name.hi);
+    link.innerHTML = directionsIcon();
+    const label = document.createElement('span');
+    label.textContent = translations[lang].viewDirections;
+    link.appendChild(label);
+    links.appendChild(link);
+    card.appendChild(links);
     venueGrid.appendChild(card);
   });
 }
@@ -347,8 +355,8 @@ function createIcsContent() {
     const startDate = event.date.replace(/-/g, '') + 'T' + event.start.replace(':', '') + '00';
     const venue = venues[event.venueId];
     const eventTitle = getText(event.title);
-    const note = getText(event.note || event.guestNote);
-    const venueName = getText(venue.name);
+    const note = event.timeText;
+    const venueName = venue.name.hi;
     const description = [note, `${appState.lang === 'hi' ? 'स्थान' : 'Venue'}: ${venueName}`].filter(Boolean).join('; ');
 
     lines.push('BEGIN:VEVENT');
@@ -359,14 +367,27 @@ function createIcsContent() {
       const endDate = event.date.replace(/-/g, '') + 'T' + event.end.replace(':', '') + '00';
       lines.push(`DTEND;TZID=Asia/Kolkata:${endDate}`);
     }
-    lines.push(`SUMMARY:${eventTitle}`);
+    lines.push(`SUMMARY:${eventTitle.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')}`);
     lines.push(`DESCRIPTION:${description.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')}`);
-    lines.push(`LOCATION:${`${venueName}, ${getText(venue.address)}`.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,')}`);
+    lines.push(`LOCATION:${`${venueName}, ${venue.address.hi}`.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n')}`);
     lines.push('END:VEVENT');
   });
 
   lines.push('END:VCALENDAR');
-  return lines.join('\r\n');
+  return lines.map((line) => {
+    let folded = '';
+    let bytes = 0;
+    for (const character of line) {
+      const size = new TextEncoder().encode(character).length;
+      if (bytes + size > 75) {
+        folded += '\r\n ';
+        bytes = 1;
+      }
+      folded += character;
+      bytes += size;
+    }
+    return folded;
+  }).join('\r\n');
 }
 
 function downloadCalendar() {

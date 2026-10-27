@@ -1502,3 +1502,62 @@ a:hover {
     gap: 0.45rem;
   }
 }
+
+
+/* Preserve the document's spelling, spacing and line breaks. */
+.source-paragraph {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.source-invitation {
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.9;
+}
+
+.source-invitation h3,
+.source-greetings h3,
+.schedule-day-heading,
+.event-item h4,
+.family-names p {
+  font-family: 'Noto Serif Devanagari', 'Mangal', serif;
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+
+.source-invitation h3 {
+  margin-top: 1.5rem;
+  color: var(--maroon);
+}
+
+.source-greetings .family-names p {
+  font-size: 1.08rem;
+}
+
+.program-heading {
+  grid-column: 1 / -1;
+  margin: 1rem 0 0;
+}
+
+.schedule-day-heading {
+  font-size: 1.2rem;
+}
+
+.event-venue {
+  overflow-wrap: anywhere;
+}
+
+html[lang="hi"] .hero-title {
+  white-space: normal;
+}
+
+@media (max-width: 760px) {
+  html[lang="hi"] .brand {
+    font-size: 1.15rem;
+    white-space: normal;
+  }
+}
